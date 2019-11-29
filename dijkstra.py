@@ -16,10 +16,11 @@ class Mark(NamedTuple):
 def get_successors(edges: Edges, s: Mark) -> Dict[Node, int]:
     successors = {}
     for e in edges:
-        if e[0] == s.marked:
-            successors[e[1]] = e[2]
-        if e[1] == s.marked:
-            successors[e[0]] = e[2]
+        if e[0] == s.marked or e[1] == s.marked:
+            m = e[0] if e[1] == s.marked else e[1]
+            w = e[2]
+            successors[m] = min(successors.get(m, w), w)
+
     return successors
 
 
@@ -81,10 +82,13 @@ if __name__ == "__main__":
 
     edges = [(1, 2, 24),
              (1, 4, 20),
-             (3, 1, 3),
+             (3, 1, 6),
+             (1, 3, 3),
+             (3, 1, 5),
              (4, 3, 12)]
 
-    shortest = dijkstra(dataset.edges, 1)
+    # shortest = dijkstra(dataset.edges, 1)
+    shortest = dijkstra(edges, 1)
     pprint(shortest)
     shortest.sort(key=lambda x: x.marked)
     pprint(shortest)

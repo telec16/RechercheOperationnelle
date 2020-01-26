@@ -45,7 +45,7 @@ def merge_marks(marks: List[Mark], exclude_marks: List[Mark], successors: Dict[N
     return marks
 
 
-def dijkstra(edges, s):
+def dijkstra(edges: Edges, s: Node):
     final_marks = [Mark(s, 0, None)]
     temp_marks = []
 
